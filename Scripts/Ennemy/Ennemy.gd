@@ -3,7 +3,7 @@ extends CharacterBody3D
 signal set_enemy_selected(enemy: Node3D)
 signal set_enemy_dead(enemy: Node3D)
 
-@export var health: float = 1000.0 : set = set_health
+@export var health: float = 1000.0 : set = set_health, get = get_health
 @export var shield: float = 500.0 : set = set_shield
 
 @export var width: int
@@ -14,7 +14,7 @@ signal set_enemy_dead(enemy: Node3D)
 @export var wait_time: float = 1.0  # Time to wait before moving again
 var target: Vector3 = Vector3()  # Target position
 
-var outline_mesh: MeshInstance3D
+@onready var outline_mesh: MeshInstance3D = $Bob/Outline
 @export var is_outline: bool = false
 @onready var health_bar_sprite = $HealthBar
 @onready var health_bar = $HealthViewPort/HealthBar3D
@@ -39,10 +39,6 @@ enum State {
 var state: State = State.MOVING
 
 func _ready():
-	outline_mesh = find_node_by_name(self, "Outline")
-	
-	turret_manager.parent = get_parent_node_3d()
-	
 	# Set heatlh and shield bar
 	health_bar.max_value = health
 	health_bar.value = health
@@ -58,30 +54,32 @@ func _ready():
 	forget_range = attack_range*4
 	
 	# Set an initial random target position
-	#set_random_target()
+	set_random_target()
 
 # Use _physics_process to use collision
 func _physics_process(delta):
 	match state:
 		State.MOVING:
-			#move_towards_target(delta)
+			move_towards_target(delta)
 			pass
 		State.WAITING:
 			pass  # Do nothing
 		State.ATTACKING_AND_MOVING:
-			move_towards_target(delta)
-			if global_transform.origin.distance_to(target) >= forget_range:
-				state = State.MOVING
-				selected_enemies_array.clear()
-				target_enemy = null
-				is_attacking = false
-				attack_target()
-			if global_transform.origin.distance_to(target) <= stop_range:
-				state = State.ATTACKING
+			#move_towards_target(delta)
+			#if global_transform.origin.distance_to(target) >= forget_range:
+				#state = State.MOVING
+				#selected_enemies_array.clear()
+				#target_enemy = null
+				#is_attacking = false
+				#attack_target()
+			#if global_transform.origin.distance_to(target) <= stop_range:
+				#state = State.ATTACKING
+			pass
 		State.ATTACKING:
-			attack_target()
-			if global_transform.origin.distance_to(target_enemy.global_transform.origin) > attack_range:
-				state = State.ATTACKING_AND_MOVING
+			#attack_target()
+			#if global_transform.origin.distance_to(target_enemy.global_transform.origin) > attack_range:
+				#state = State.ATTACKING_AND_MOVING
+			pass
 
 func move_towards_target(delta):
 	if target_enemy:
@@ -112,7 +110,7 @@ func move_towards_target(delta):
 			state = State.WAITING
 			wait_before_moving()
 
-func _input_event(camera, event, position, normal, shape_idx):
+func _input_event(_camera, event, _position, _normal, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			print("Enemy clicked!")
@@ -128,7 +126,7 @@ func wait_before_moving():
 
 func set_random_target():
 	# Set a new random target position
-	target = spawn_position + Vector3(randi() % width - width/2, 0, randi() % height - height/2)
+	target = spawn_position + Vector3(randi() % width - width/2.0, randi() % width - width/2.0, randi() % height - height/2.0)
 
 func find_node_by_name(parent: Node, target_name: String) -> Node:
 	for child in parent.get_children():
@@ -169,15 +167,6 @@ func attack_target():
 	# Maybe don't use this to not refresh the target every frame
 	if turret_manager.has_method("set_selected_enemies_array"):
 		turret_manager.call("set_selected_enemies_array", selected_enemies_array)
-
-func set_attack_mode(parent):
-	is_attacking = true
-	state = State.ATTACKING_AND_MOVING
-	# Append parent, the one firing on the enemy
-	if selected_enemies_array.find(parent) == -1:
-		selected_enemies_array.append(parent)
-	target_enemy = selected_enemies_array[0].get_child(0)
-	target = selected_enemies_array[0].global_transform.origin
 
 func set_health(value):
 	pass

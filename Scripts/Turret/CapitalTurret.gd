@@ -14,9 +14,9 @@ var ELEVATION_SPEED: float = 5.0
 @onready var turret: MeshInstance3D = $Turret1Case
 @onready var cannon: MeshInstance3D = $Turret1Case/Cannon1
 @export var fixed: bool
+@export var automatic: bool
 
-var target_enemy: CharacterBody3D = null
-var is_enemy_visible: bool = false
+var target_enemy: Node3D = null
 var can_fire: bool = true
 var initial_rotation: Vector3 = Vector3()
 
@@ -37,15 +37,17 @@ func _ready():
 		cannon.material_override.albedo_texture = texture
 
 func _process(delta):
-	if is_enemy_visible:
+	#rotate_towards_target(delta)
+	if target_enemy:
 		rotate_and_elevate(delta, target_enemy.global_position)
+		auto_attack_enemy()
 	reset_rotation(delta)
 
 func set_target_enemy(enemy):
 	target_enemy = enemy
 
 func rotate_and_elevate(delta, target_position):
-	if !fixed or is_enemy_visible:
+	if !fixed or (!automatic and is_visible):
 		# Code by Neal Holtschulte: https://github.com/nealholt/TurretGodot/tree/main
 		# Project the target onto the XZ plane of the turret
 		# but first adjust by the global position because
@@ -128,8 +130,18 @@ func get_projected(pos:Vector3, normal:Vector3) -> Vector3:
 	var projection:Vector3 = (pos.dot(normal) / normal.dot(normal)) * normal
 	return pos - projection
 
-func attack_enemy():
-	if !can_fire:
+func auto_attack_enemy():
+	if target_enemy == null or !can_fire or !target_enemy.is_inside_tree():
+		return
+		
+	# Check if the enemy is in range
+	var target_position: Vector3 = target_enemy.get_child(0).global_transform.origin
+	var distance_to_enemy = global_transform.origin.distance_to(target_position)
+	if distance_to_enemy > turret_range:
+		return
+	
+	# Check if the cannon's elevation angle is clamped at its limits
+	if is_cannon_clamped():
 		return
 	
 	fire_laser()
@@ -149,7 +161,7 @@ func fire_laser():
 		laser.global_transform.origin = cannon.get_child(0).global_transform.origin
 
 func reset_rotation(delta):
-	if target_enemy == null and !fixed and turret.rotation != initial_rotation or target_enemy != null and !is_enemy_visible:
+	if target_enemy == null and !fixed and turret.rotation != initial_rotation or target_enemy != null and !is_visible:
 		var current_rotation = turret.rotation.y
 		var target_rotation = initial_rotation.y
 		var new_rotation = lerp_angle(current_rotation, target_rotation, ROTATION_SPEED * delta)
@@ -169,6 +181,3 @@ func rad2deg(radians):
 func is_cannon_clamped() -> bool:
 	var elevation_angle = rad2deg(cannon.rotation.x)
 	return elevation_angle <= -max_elevation or elevation_angle >= min_elevation
-
-func set_is_visible(state: bool):
-	self.is_enemy_visible = state

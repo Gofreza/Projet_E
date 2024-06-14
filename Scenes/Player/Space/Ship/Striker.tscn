@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://ckep2jcjc5p1e"]
 
-[ext_resource type="Script" path="res://Scenes/Player/Space/Script/Test2.gd" id="1_17jkw"]
+[ext_resource type="Script" path="res://Scenes/Player/Space/Script/ShipController.gd" id="1_17jkw"]
 [ext_resource type="Texture2D" uid="uid://bo6xgm8ydyfgd" path="res://Assets/Models/OBJ/Striker/Striker_Purple.png" id="2_kbmhf"]
 [ext_resource type="ArrayMesh" uid="uid://cgtqof5m6msyr" path="res://Assets/Models/OBJ/Striker/Striker.obj" id="3_2f32q"]
 [ext_resource type="Script" path="res://Scripts/Turret/TurretManager.gd" id="4_ygpvd"]

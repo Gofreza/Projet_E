@@ -1,5 +1,13 @@
 extends CharacterBody3D
 
+####################################
+## SHIP CONTROLER
+## 
+## Can use fixed and auto lock turret
+## Cannot use automatic turrets
+##
+#####################################
+
 @onready var plane_mesh = self
 @onready var cam = $CameraRoot/CameraYaw/CameraPitch/Camera3D
 @onready var birdcam = $CameraRoot/CameraYaw/CameraPitch/BirdCamera3D
@@ -66,9 +74,6 @@ func _ready() -> void:
 func _physics_process(delta: float):
 	if Input.is_action_just_pressed("lock"):
 		lock_enemy()
-		
-	if Input.is_action_just_pressed("jump"):
-		attack_selected_enemies()
 	
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		fire_cannons()
@@ -95,6 +100,7 @@ func lock_enemy():
 			_on_locked_enemy_visible()
 		else:
 			selected_enemies_array.erase(closest)
+			_on_locked_enemy_invisible()
 	#print(selected_enemies_array)
 
 func move_character(delta):
@@ -158,15 +164,6 @@ func apply_rotation(vector, delta):
 
 func apply_roll(angle):
 	rotate(global_transform.basis.y, angle)
-
-func attack_selected_enemies():
-	if turret_manager.has_method("set_selected_enemies_array"):
-		if is_attacking:
-			turret_manager.call("set_selected_enemies_array", empty_array)
-			is_attacking = false
-		else:
-			turret_manager.call("set_selected_enemies_array", selected_enemies_array)
-			is_attacking = true
 
 func fire_cannons():
 	turret_manager.call("fire_cannons")

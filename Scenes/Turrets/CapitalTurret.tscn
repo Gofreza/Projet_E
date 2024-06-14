@@ -1,16 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://3jms4qr7flea"]
+[gd_scene load_steps=5 format=3 uid="uid://3jms4qr7flea"]
 
-[ext_resource type="Script" path="res://Scripts/Turret/Turret.gd" id="1_52p0o"]
-[ext_resource type="PackedScene" uid="uid://i66h73x4rvho" path="res://Scenes/Turrets/Laser.tscn" id="2_jk7p8"]
+[ext_resource type="Script" path="res://Scripts/Turret/CapitalTurret.gd" id="1_f1b2r"]
 [ext_resource type="ArrayMesh" uid="uid://bnrtowc3ngbcm" path="res://Assets/Models/OBJ/Turret/turret_base.obj" id="3_3gkmp"]
 [ext_resource type="ArrayMesh" uid="uid://wytqp0oh5vny" path="res://Assets/Models/OBJ/Turret/Case/turret1case.obj" id="4_s470o"]
 [ext_resource type="ArrayMesh" uid="uid://dft80bjatxs0o" path="res://Assets/Models/OBJ/Turret/Cannon/cannon1.obj" id="5_xmpqo"]
 
 [node name="Turret" type="Node3D"]
 transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, 0, 0, 0)
-script = ExtResource("1_52p0o")
+script = ExtResource("1_f1b2r")
 automatic = true
-laser_scene = ExtResource("2_jk7p8")
 
 [node name="TurretBase" type="MeshInstance3D" parent="."]
 mesh = ExtResource("3_3gkmp")

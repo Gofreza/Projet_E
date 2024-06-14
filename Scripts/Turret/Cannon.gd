@@ -12,6 +12,7 @@ var ELEVATION_SPEED: float = 5.0
 @export var fire_rate: float = 1.0
 @onready var cannon: MeshInstance3D = $Cannon1
 @export var fixed: bool
+var automatic: bool = false
 
 var can_fire: bool = true
 var initial_rotation: Vector3 = Vector3()

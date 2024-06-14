@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://dxa72bp1lru6r"]
 
-[ext_resource type="Script" path="res://Scenes/Player/Space/Script/Test2.gd" id="1_g440g"]
+[ext_resource type="Script" path="res://Scenes/Player/Space/Script/ShipController.gd" id="1_g440g"]
 [ext_resource type="Texture2D" uid="uid://d4g2lfhsevgim" path="res://Assets/Models/OBJ/Pancake/Pancake_Green.png" id="2_pkgyk"]
 [ext_resource type="ArrayMesh" uid="uid://cyt81cr5djwb8" path="res://Assets/Models/OBJ/Pancake/Pancake.obj" id="3_yfgcu"]
 [ext_resource type="Script" path="res://Scripts/Turret/TurretManager.gd" id="4_ujpdb"]
@@ -38,11 +38,13 @@ script = ExtResource("4_ujpdb")
 
 [node name="Turret" parent="TurretManager" instance=ExtResource("5_wyjvi")]
 transform = Transform3D(-0.13, 4.53423e-17, 1.96295e-08, 4.53423e-17, 0.13, -4.53423e-17, -1.96295e-08, -4.53423e-17, -0.13, 1.77792, 0.0427381, -1.94961)
+fire_rate = 0.2
 texture = ExtResource("2_pkgyk")
 laser_scene = ExtResource("6_yqc0r")
 
 [node name="Turret2" parent="TurretManager" instance=ExtResource("5_wyjvi")]
 transform = Transform3D(-0.13, 4.53423e-17, 1.96295e-08, 4.53423e-17, 0.13, -4.53423e-17, -1.96295e-08, -4.53423e-17, -0.13, -1.778, 0.043, -1.95)
+fire_rate = 0.2
 texture = ExtResource("2_pkgyk")
 laser_scene = ExtResource("6_yqc0r")
 

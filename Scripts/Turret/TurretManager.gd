@@ -1,6 +1,5 @@
 extends Node3D
 
-var parent
 @export var selected_enemies_array: Array[CharacterBody3D] = []
 @export var is_enemy: bool
 
@@ -33,28 +32,29 @@ func on_enemy_dead(enemy: Node3D):
 	for i in range(turrets_number):
 		turrets_array[i].call("on_enemy_dead", enemy)
 
+# Call for automatic turrets
 func set_selected_enemies_array(array: Array[CharacterBody3D]):
 	selected_enemies_array.clear()
 	selected_enemies_array.append_array(array) 
 	send_to_turrets()
-	if not is_enemy:
-		print("Selected enemies array updated:", selected_enemies_array)
-
+	
+# Call for non automatic turrets
 func lock_enemies(array: Array[CharacterBody3D]):
 	selected_enemies_array.clear()
 	selected_enemies_array.append_array(array) 
 	for i in range(turrets_array.size()):
 		send_to_turrets()
-		turrets_array[i].is_visible = true
+		if turrets_array[i].has_method("set_is_visible"):
+			turrets_array[i].call("set_is_visible", true)
 
 func unlock_enemies():
 	for i in range(turrets_array.size()):
-		turrets_array[i].is_visible = false
+		if turrets_array[i].has_method("set_is_visible"):
+			turrets_array[i].call("set_is_visible", false)
 
 func fire_cannons():
 	for i in range(turrets_array.size()):
-		if !turrets_array[i].automatic:
-			turrets_array[i].call("attack_enemy")
+		turrets_array[i].call("attack_enemy")
 
 func get_range() -> int:
 	var turret_range: int = 0
