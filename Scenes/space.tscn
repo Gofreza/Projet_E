@@ -1,0 +1,86 @@
+[gd_scene load_steps=10 format=3 uid="uid://drg0juokax2sm"]
+
+[ext_resource type="Script" path="res://Scripts/Character/ShipController.gd" id="1_rhgfi"]
+[ext_resource type="PackedScene" uid="uid://d8dvi3x4hyu2" path="res://Scenes/Characters/ImperialRed.tscn" id="2_04aft"]
+[ext_resource type="Script" path="res://Scripts/Ennemy/EnnemyManager.gd" id="3_1ssst"]
+[ext_resource type="Resource" uid="uid://cxyec2anywllf" path="res://Assets/EnemiesData/Dispatcher.tres" id="4_dvklt"]
+[ext_resource type="Resource" uid="uid://co8lsdmbkplnp" path="res://Assets/EnemiesData/Bob.tres" id="5_kl76a"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_y6axr"]
+
+[sub_resource type="Sky" id="Sky_6snbb"]
+sky_material = SubResource("ProceduralSkyMaterial_y6axr")
+
+[sub_resource type="Environment" id="Environment_hhixj"]
+background_mode = 2
+sky = SubResource("Sky_6snbb")
+
+[sub_resource type="LabelSettings" id="LabelSettings_5ih32"]
+font_size = 60
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.826128, 0.563483, 0, -0.563483, 0.826128, 0.295681, 6.27675, 7.88665)
+
+[node name="Character" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 7, 2.08165e-12)
+
+[node name="Imperial" parent="Character" node_paths=PackedStringArray("character", "camera_root") instance=ExtResource("2_04aft")]
+script = ExtResource("1_rhgfi")
+character = NodePath(".")
+camera_root = NodePath("../CameraRoot")
+
+[node name="CameraRoot" type="Node3D" parent="Character"]
+
+[node name="CameraYaw" type="Node3D" parent="Character/CameraRoot"]
+
+[node name="CameraPitch" type="Node3D" parent="Character/CameraRoot/CameraYaw"]
+
+[node name="Camera3D" type="Camera3D" parent="Character/CameraRoot/CameraYaw/CameraPitch"]
+transform = Transform3D(1, -6.97574e-16, -1.5246e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 2.08165e-12, 34.391, 2.08165e-12)
+environment = SubResource("Environment_hhixj")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.141254, -1.78393, 4.74348)
+use_collision = true
+size = Vector3(36.1735, 1, 36.7179)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.141, -1.784, -80)
+use_collision = true
+size = Vector3(36.1735, 1, 36.7179)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.141, -1.784, 80)
+use_collision = true
+size = Vector3(36.1735, 1, 36.7179)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.3963, -5.25576, 1.4876)
+use_collision = true
+size = Vector3(2.13818, 30.6157, 41.7758)
+
+[node name="EnnemyManager" type="Node" parent="." node_paths=PackedStringArray("label")]
+script = ExtResource("3_1ssst")
+little_ennemy_path = "res://Scenes/Characters/Dispatcher.tscn"
+label = NodePath("../Control/VBoxContainer/Label")
+enemies_data = Array[Resource("res://Scripts/Ennemy/EnemiesData.gd")]([ExtResource("4_dvklt"), ExtResource("5_kl76a")])
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Enemy Placeholder"
+label_settings = SubResource("LabelSettings_5ih32")
+
+[connection signal="ennemy_selected" from="EnnemyManager" to="Character/Imperial" method="_on_enemy_selected"]

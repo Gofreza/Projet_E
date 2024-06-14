@@ -1,0 +1,108 @@
+[gd_scene load_steps=18 format=3 uid="uid://h1xtr24lahnc"]
+
+[ext_resource type="Script" path="res://Scripts/Character/CharacterBody3D.gd" id="1_lxpk7"]
+[ext_resource type="Resource" uid="uid://r53dce433gmv" path="res://Assets/MovementStates/stand.tres" id="2_hugyc"]
+[ext_resource type="Resource" uid="uid://cxaq74xvdsxkw" path="res://Assets/MovementStates/walk.tres" id="3_7gpqj"]
+[ext_resource type="Script" path="res://Scripts/CameraController.gd" id="3_ipgsd"]
+[ext_resource type="Resource" uid="uid://daft3u77s3wch" path="res://Assets/MovementStates/run.tres" id="4_t3roa"]
+[ext_resource type="Resource" uid="uid://qthwiwiw2p5d" path="res://Assets/MovementStates/sprint.tres" id="5_5h610"]
+[ext_resource type="Script" path="res://Scripts/Character/MovementControler.gd" id="6_uap2i"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hfnnq"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wiakn"]
+
+[sub_resource type="Sky" id="Sky_jutmr"]
+sky_material = SubResource("ProceduralSkyMaterial_wiakn")
+
+[sub_resource type="Environment" id="Environment_xk2tm"]
+background_mode = 2
+sky = SubResource("Sky_jutmr")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ru86o"]
+albedo_color = Color(0.510244, 0.973173, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_urfef"]
+material = SubResource("StandardMaterial3D_ru86o")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6thm7"]
+albedo_color = Color(0.0361009, 0.0361009, 0.0361009, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ugvn0"]
+material = SubResource("StandardMaterial3D_6thm7")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0g2vg"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_erlxw"]
+material = SubResource("StandardMaterial3D_0g2vg")
+top_radius = 0.2
+bottom_radius = 0.001
+height = 0.5
+
+[node name="Game" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.670582, 0.741835, 0, -0.741835, 0.670582, 0, 12.1308, 13.998)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.141254, 0, 4.74348)
+use_collision = true
+size = Vector3(36.1735, 1, 36.7179)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.95115, 1.91392, 1.53271)
+script = ExtResource("1_lxpk7")
+movement_states = {
+"run": ExtResource("4_t3roa"),
+"sprint": ExtResource("5_5h610"),
+"stand": ExtResource("2_hugyc"),
+"walk": ExtResource("3_7gpqj")
+}
+
+[node name="MovementController" type="Node" parent="CharacterBody3D" node_paths=PackedStringArray("player", "mesh_root")]
+script = ExtResource("6_uap2i")
+player = NodePath("..")
+mesh_root = NodePath("../MeshRoot")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_hfnnq")
+
+[node name="CameraRoot" type="Node3D" parent="CharacterBody3D"]
+script = ExtResource("3_ipgsd")
+
+[node name="CameraYaw" type="Node3D" parent="CharacterBody3D/CameraRoot"]
+
+[node name="CameraPitch" type="Node3D" parent="CharacterBody3D/CameraRoot/CameraYaw"]
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/CameraRoot/CameraYaw/CameraPitch"]
+transform = Transform3D(1, 0, 0, 0, 0.857257, 0.514889, 0, -0.514889, 0.857257, 0.0433725, 1.68865, 1.89983)
+environment = SubResource("Environment_xk2tm")
+
+[node name="MeshRoot" type="Node3D" parent="CharacterBody3D"]
+
+[node name="Body" type="MeshInstance3D" parent="CharacterBody3D/MeshRoot"]
+mesh = SubResource("CapsuleMesh_urfef")
+skeleton = NodePath("../..")
+
+[node name="RightEye" type="MeshInstance3D" parent="CharacterBody3D/MeshRoot/Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.152735, 0.488925, -0.433546)
+mesh = SubResource("SphereMesh_ugvn0")
+skeleton = NodePath("../../..")
+
+[node name="LeftEye" type="MeshInstance3D" parent="CharacterBody3D/MeshRoot/Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.135626, 0.489, -0.434)
+mesh = SubResource("SphereMesh_ugvn0")
+skeleton = NodePath("../RightEye")
+
+[node name="Nose" type="MeshInstance3D" parent="CharacterBody3D/MeshRoot/Body"]
+transform = Transform3D(1, 0, -1.5246e-23, -1.5246e-23, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.270644, -0.509453)
+mesh = SubResource("CylinderMesh_erlxw")
+skeleton = NodePath("../../..")
+
+[connection signal="set_movement_direction" from="CharacterBody3D" to="CharacterBody3D/MovementController" method="_on_set_movement_direction"]
+[connection signal="set_movement_state" from="CharacterBody3D" to="CharacterBody3D/MovementController" method="_on_set_movement_state"]
+[connection signal="set_movement_state" from="CharacterBody3D" to="CharacterBody3D/CameraRoot" method="_on_set_movement_state"]
+[connection signal="set_cam_rotation" from="CharacterBody3D/CameraRoot" to="CharacterBody3D/MovementController" method="_on_set_cam_rotation"]

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemiesData" load_steps=2 format=3 uid="uid://co8lsdmbkplnp"]
+
+[ext_resource type="Script" path="res://Scripts/Ennemy/EnemiesData.gd" id="1_b1ucp"]
+
+[resource]
+script = ExtResource("1_b1ucp")
+enemy_path = "res://Scenes/Characters/BobBlue.tscn"
+enemy_spawn_zone_position = Vector3(2.08165e-12, 7, -80)
+enemy_spawn_zone_width = 50
+enemy_spawn_zone_height = 50
+enemy_number = 10

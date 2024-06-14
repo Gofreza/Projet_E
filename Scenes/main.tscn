@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://ph5ahdj5c7iu"]
+
+[ext_resource type="Script" path="res://Scripts/TabManager.gd" id="1_qeris"]
+
+[sub_resource type="World3D" id="World3D_bv4yo"]
+
+[sub_resource type="World3D" id="World3D_pwks0"]
+
+[node name="Node2D" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qeris")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Base" type="Control" parent="TabContainer"]
+layout_mode = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="TabContainer/Base"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="TabContainer/Base/SubViewportContainer"]
+world_3d = SubResource("World3D_bv4yo")
+handle_input_locally = false
+size = Vector2i(2, 2)
+render_target_update_mode = 0
+
+[node name="Game" type="Control" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="TabContainer/Game"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="TabContainer/Game/SubViewportContainer"]
+world_3d = SubResource("World3D_pwks0")
+handle_input_locally = false
+size = Vector2i(2, 2)
+render_target_update_mode = 0

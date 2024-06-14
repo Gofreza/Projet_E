@@ -1,0 +1,155 @@
+[gd_scene load_steps=19 format=3 uid="uid://dlu8j1yyb15qy"]
+
+[ext_resource type="Texture2D" uid="uid://mdigcoqnw7mg" path="res://Assets/Models/OBJ/Imperial/Imperial_Red.png" id="1_p8jij"]
+[ext_resource type="ArrayMesh" uid="uid://ddpljq5mjpein" path="res://Assets/Models/OBJ/Imperial/Imperial.obj" id="2_2a2n6"]
+[ext_resource type="Script" path="res://Scripts/Turret/TurretManager.gd" id="3_5rn4k"]
+[ext_resource type="ArrayMesh" uid="uid://ctkv2plmv0rux" path="res://Assets/Models/OBJ/Turret/Turret/turret_1.obj" id="3_qk26g"]
+[ext_resource type="ArrayMesh" uid="uid://bnrtowc3ngbcm" path="res://Assets/Models/OBJ/Turret/turret_base.obj" id="4_8qnxh"]
+[ext_resource type="Script" path="res://Scripts/Turret/Turret.gd" id="4_rft3r"]
+[ext_resource type="PackedScene" uid="uid://i66h73x4rvho" path="res://Scenes/Turrets/Laser.tscn" id="5_c6888"]
+[ext_resource type="PackedScene" uid="uid://bdxdivqbuum6b" path="res://Scenes/Menu/health_bar_3d.tscn" id="8_0ybbf"]
+[ext_resource type="PackedScene" uid="uid://qktfoyk8fhxg" path="res://Scenes/Menu/shield_bar_3d.tscn" id="9_mmo05"]
+[ext_resource type="ArrayMesh" uid="uid://dsli6sfyi0gib" path="res://Assets/Models/OBJ/Imperial/MiddleThruster.obj" id="10_lvwb5"]
+[ext_resource type="Material" uid="uid://dwnc2yfbqdmkc" path="res://Assets/Materials/ThrusterMaterial.tres" id="11_m5fft"]
+[ext_resource type="ArrayMesh" uid="uid://c1pt3xxbu6itr" path="res://Assets/Models/OBJ/Imperial/SideThruster.obj" id="12_wjb0a"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8jl4a"]
+albedo_texture = ExtResource("1_p8jij")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_5iw8w"]
+points = PackedVector3Array(-3.73986, -0.517193, -6.17133, 3.93653, 0.599409, 2.01674, 3.64162, 0.893712, 2.01674, -2.24489, -0.283157, 12.0246, 3.64162, -1.46141, -2.39799, -3.42297, 1.48267, -6.81457, 3.34826, 1.48267, -6.81457, -0.478549, 1.48267, 8.78636, 2.46432, -0.283157, 12.0246, -3.7171, -1.16676, 2.01674, 1.58115, 2.07162, 0.545161, -3.12806, 0.893712, 8.19625, 3.30406, -1.29933, -5.9503, 2.19224, 1.0923, 10.2129, -3.14083, -1.3142, -6.0296, 2.42335, -0.990348, 7.78579, -1.36172, 2.07162, 0.840214, -4.01123, 0.305105, 1.72353, -3.42297, -1.46141, -2.39799, -2.44941, -0.964386, 7.68197, -2.1195, 0.860279, 10.9329, 3.93653, -0.87211, 2.01674, 3.6277, -0.508873, -6.08253, -3.42297, 1.48267, -2.39799, -4.01123, 0.893712, -6.22446, 3.05258, 0.893712, 8.19625, -4.01123, -0.577461, 1.72353, 3.34826, 1.48267, -2.39799, -3.48075, -1.07222, -6.20954, 2.46432, 0.0111468, 12.0246, -2.0048, 1.0923, 10.2129, -3.7171, 0.893712, 2.01674)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rhywt"]
+albedo_texture = ExtResource("1_p8jij")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lncjd"]
+albedo_texture = ExtResource("1_p8jij")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_m3s8j"]
+viewport_path = NodePath("CharacterBody3D/HealthViewPort")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_gbpxn"]
+viewport_path = NodePath("CharacterBody3D/ShieldViewPort")
+
+[node name="ImperialRed" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+
+[node name="Imperial" type="MeshInstance3D" parent="CharacterBody3D"]
+transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_8jl4a")
+mesh = ExtResource("2_2a2n6")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, 0, 0, 0)
+visible = false
+shape = SubResource("ConvexPolygonShape3D_5iw8w")
+
+[node name="TurretManager" type="Node3D" parent="CharacterBody3D"]
+script = ExtResource("3_5rn4k")
+
+[node name="Turret1" type="Node3D" parent="CharacterBody3D/TurretManager"]
+transform = Transform3D(-0.3, 1.04636e-16, 2.62268e-08, 1.04636e-16, 0.3, -1.04636e-16, -2.62268e-08, -1.04636e-16, -0.3, 2.08165e-12, 0.996, -3.80785)
+script = ExtResource("4_rft3r")
+laser_scene = ExtResource("5_c6888")
+metadata/turnable = true
+
+[node name="Turret1" type="MeshInstance3D" parent="CharacterBody3D/TurretManager/Turret1"]
+transform = Transform3D(1, 1.52268e-23, 6.15789e-15, -6.95236e-24, 1, 3.86523e-25, -1.42585e-14, -3.32629e-23, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_rhywt")
+mesh = ExtResource("3_qk26g")
+skeleton = NodePath("../../../..")
+
+[node name="TurretBase" type="MeshInstance3D" parent="CharacterBody3D/TurretManager/Turret1"]
+material_override = SubResource("StandardMaterial3D_lncjd")
+mesh = ExtResource("4_8qnxh")
+skeleton = NodePath("../../../..")
+
+[node name="Timer" type="Timer" parent="CharacterBody3D/TurretManager/Turret1"]
+
+[node name="RangeIndicator" type="MeshInstance3D" parent="CharacterBody3D/TurretManager/Turret1"]
+
+[node name="Turret2" type="Node3D" parent="CharacterBody3D/TurretManager"]
+transform = Transform3D(-0.3, 1.04636e-16, 2.62268e-08, 1.04636e-16, 0.3, -1.04636e-16, -2.62268e-08, -1.04636e-16, -0.3, 2.08165e-12, 0.996, -6.44073)
+script = ExtResource("4_rft3r")
+laser_scene = ExtResource("5_c6888")
+metadata/turnable = true
+
+[node name="Turret1" type="MeshInstance3D" parent="CharacterBody3D/TurretManager/Turret2"]
+transform = Transform3D(1, 1.96385e-23, 4.89495e-15, 7.505e-25, 1, -7.31628e-24, -4.78457e-15, -2.88513e-23, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_rhywt")
+mesh = ExtResource("3_qk26g")
+skeleton = NodePath("../../../..")
+
+[node name="TurretBase" type="MeshInstance3D" parent="CharacterBody3D/TurretManager/Turret2"]
+material_override = SubResource("StandardMaterial3D_lncjd")
+mesh = ExtResource("4_8qnxh")
+skeleton = NodePath("../../../..")
+
+[node name="Timer" type="Timer" parent="CharacterBody3D/TurretManager/Turret2"]
+
+[node name="RangeIndicator" type="MeshInstance3D" parent="CharacterBody3D/TurretManager/Turret2"]
+transform = Transform3D(1, -2.4197e-24, 7.73712e-15, -1.51314e-23, 1, 8.56558e-24, -3.60032e-15, -2.0028e-23, 1, -7.67245e-07, 0, -8.77627)
+skeleton = NodePath("../../Turret1")
+
+[node name="Turret3" type="Node3D" parent="CharacterBody3D/TurretManager"]
+transform = Transform3D(-0.3, 1.04636e-16, 2.62268e-08, 1.04636e-16, 0.3, -1.04636e-16, -2.62268e-08, -1.04636e-16, -0.3, 2.08165e-12, 0.976704, 4.62838)
+script = ExtResource("4_rft3r")
+laser_scene = ExtResource("5_c6888")
+metadata/turnable = true
+
+[node name="Turret1" type="MeshInstance3D" parent="CharacterBody3D/TurretManager/Turret3"]
+transform = Transform3D(1, 1.96385e-23, 4.89495e-15, 7.505e-25, 1, -7.31628e-24, -4.78457e-15, -2.88513e-23, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_rhywt")
+mesh = ExtResource("3_qk26g")
+skeleton = NodePath("../../../..")
+
+[node name="TurretBase" type="MeshInstance3D" parent="CharacterBody3D/TurretManager/Turret3"]
+material_override = SubResource("StandardMaterial3D_lncjd")
+mesh = ExtResource("4_8qnxh")
+skeleton = NodePath("../../../..")
+
+[node name="Timer" type="Timer" parent="CharacterBody3D/TurretManager/Turret3"]
+
+[node name="RangeIndicator" type="MeshInstance3D" parent="CharacterBody3D/TurretManager/Turret3"]
+
+[node name="HealthBar" type="Sprite3D" parent="CharacterBody3D"]
+transform = Transform3D(-1, -8.74228e-08, -3.82137e-15, -1.5246e-23, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 2.08165e-12, 2, 0.379519)
+texture = SubResource("ViewportTexture_m3s8j")
+
+[node name="ShieldBar" type="Sprite3D" parent="CharacterBody3D"]
+transform = Transform3D(-1, -8.74228e-08, -3.82137e-15, -1.5246e-23, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 2.08165e-12, 2, 0.0378229)
+texture = SubResource("ViewportTexture_gbpxn")
+
+[node name="HealthViewPort" type="SubViewport" parent="CharacterBody3D"]
+disable_3d = true
+transparent_bg = true
+
+[node name="HealthBar3D" parent="CharacterBody3D/HealthViewPort" instance=ExtResource("8_0ybbf")]
+
+[node name="ShieldViewPort" type="SubViewport" parent="CharacterBody3D"]
+disable_3d = true
+transparent_bg = true
+
+[node name="ShieldBar3D" parent="CharacterBody3D/ShieldViewPort" instance=ExtResource("9_mmo05")]
+
+[node name="Thrusters" type="Node3D" parent="CharacterBody3D"]
+
+[node name="MiddleThruster" type="MeshInstance3D" parent="CharacterBody3D/Thrusters"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00513101, -0.00356674, 5.14086)
+mesh = ExtResource("10_lvwb5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("11_m5fft")
+
+[node name="SideThruster" type="MeshInstance3D" parent="CharacterBody3D/Thrusters"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0847, -0.0187914, 6.47923)
+mesh = ExtResource("12_wjb0a")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("11_m5fft")
+
+[node name="SideThruster2" type="MeshInstance3D" parent="CharacterBody3D/Thrusters"]
+transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, -3.085, -0.019, 6.479)
+mesh = ExtResource("12_wjb0a")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("11_m5fft")

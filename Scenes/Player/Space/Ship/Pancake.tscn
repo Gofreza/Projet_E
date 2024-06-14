@@ -1,0 +1,147 @@
+[gd_scene load_steps=15 format=3 uid="uid://dxa72bp1lru6r"]
+
+[ext_resource type="Script" path="res://Scenes/Player/Space/Script/Test2.gd" id="1_g440g"]
+[ext_resource type="Texture2D" uid="uid://d4g2lfhsevgim" path="res://Assets/Models/OBJ/Pancake/Pancake_Green.png" id="2_pkgyk"]
+[ext_resource type="ArrayMesh" uid="uid://cyt81cr5djwb8" path="res://Assets/Models/OBJ/Pancake/Pancake.obj" id="3_yfgcu"]
+[ext_resource type="Script" path="res://Scripts/Turret/TurretManager.gd" id="4_ujpdb"]
+[ext_resource type="PackedScene" uid="uid://c7xqjkdl16pwj" path="res://Scenes/Turrets/Turret.tscn" id="5_wyjvi"]
+[ext_resource type="PackedScene" uid="uid://bdwlhv46su6r8" path="res://Scenes/Turrets/Bullet.tscn" id="6_yqc0r"]
+[ext_resource type="Script" path="res://Scripts/Area3D.gd" id="7_ubrlg"]
+[ext_resource type="Script" path="res://Scenes/Player/Space/Script/UI.gd" id="8_7btrv"]
+[ext_resource type="Script" path="res://Scenes/Player/Space/Script/Analog_input.gd" id="9_xx8vb"]
+[ext_resource type="PackedScene" uid="uid://bdxdivqbuum6b" path="res://Scenes/Menu/health_bar_3d.tscn" id="10_g5cj4"]
+[ext_resource type="PackedScene" uid="uid://qktfoyk8fhxg" path="res://Scenes/Menu/shield_bar_3d.tscn" id="11_hgws4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tp1ub"]
+albedo_texture = ExtResource("2_pkgyk")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7m7tt"]
+points = PackedVector3Array(2.99909, 0.275281, 2.83146, -0.457701, -0.4801, -2.98027, -0.447799, -0.16356, -2.89777, -2.66625, -0.224868, 4.66556, -0.166192, 1.77545, -0.501393, -5.33445, 0.275281, -1.66728, 5.33415, -0.0581521, -1.6681, 2.25064, -0.917169, 4.43314, -2.50021, -1.05845, 0.333249, 2.49991, -1.05845, 0.333249, 0.302355, 1.04151, -2.50889, 1.66552, 0.108564, 4.49912, -2.2509, -0.917152, 4.43309, 5.33415, 0.275281, -1.3344, -5.33445, -0.0581521, -1.66728, 2.66596, 0.941868, -2.33467, -2.66625, 0.941868, -2.33467, 2.49991, -0.224868, 4.832, -3.33252, 0.108564, 3.16516, -1.66581, 0.108564, 4.49912, 0.456451, -0.4801, -2.98027, 0.164852, 1.77545, -0.501393, -1.99894, -0.224868, 4.99925, -1.99894, 1.2753, -0.667832, -5.33445, -0.0581521, -1.33522, 1.99969, 1.2753, -0.667832, 5.33415, -0.0581521, -1.3344, 5.16707, 0.275281, -1.83454, 0.309471, 0.746961, -2.74266, 1.80161, -0.9181, 4.58646, -5.33445, 0.275281, -1.33522, -5.16736, -0.0581521, -1.83454)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jb0iq"]
+points = PackedVector3Array(0, 0, 0, 77, -42, -100, 77, 45, -100, -77, 45, -100, -77, -42, -100)
+
+[node name="Pancake" type="CharacterBody3D"]
+script = ExtResource("1_g440g")
+
+[node name="Pancake" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_tp1ub")
+mesh = ExtResource("3_yfgcu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_7m7tt")
+
+[node name="TurretManager" type="Node3D" parent="."]
+script = ExtResource("4_ujpdb")
+
+[node name="Turret" parent="TurretManager" instance=ExtResource("5_wyjvi")]
+transform = Transform3D(-0.13, 4.53423e-17, 1.96295e-08, 4.53423e-17, 0.13, -4.53423e-17, -1.96295e-08, -4.53423e-17, -0.13, 1.77792, 0.0427381, -1.94961)
+texture = ExtResource("2_pkgyk")
+laser_scene = ExtResource("6_yqc0r")
+
+[node name="Turret2" parent="TurretManager" instance=ExtResource("5_wyjvi")]
+transform = Transform3D(-0.13, 4.53423e-17, 1.96295e-08, 4.53423e-17, 0.13, -4.53423e-17, -1.96295e-08, -4.53423e-17, -0.13, -1.778, 0.043, -1.95)
+texture = ExtResource("2_pkgyk")
+laser_scene = ExtResource("6_yqc0r")
+
+[node name="Thrusters" type="Node3D" parent="."]
+
+[node name="CameraRoot" type="Node3D" parent="."]
+
+[node name="CameraYaw" type="Node3D" parent="CameraRoot"]
+
+[node name="CameraPitch" type="Node3D" parent="CameraRoot/CameraYaw"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraRoot/CameraYaw/CameraPitch"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.658463, -0.801221)
+
+[node name="Area3D" type="Area3D" parent="CameraRoot/CameraYaw/CameraPitch/Camera3D"]
+collision_layer = 5
+script = ExtResource("7_ubrlg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraRoot/CameraYaw/CameraPitch/Camera3D/Area3D"]
+transform = Transform3D(-1, -8.74228e-08, 3.48787e-16, 8.74228e-08, -1, -3.48787e-16, 3.48787e-16, -3.48787e-16, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+shape = SubResource("ConvexPolygonShape3D_jb0iq")
+
+[node name="BirdCamera3D" type="Camera3D" parent="CameraRoot/CameraYaw/CameraPitch"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.23567, 6.52969)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("target", "speedControl", "healthShieldControl")]
+script = ExtResource("8_7btrv")
+target = NodePath("..")
+speedControl = NodePath("ForwardSpeed")
+healthShieldControl = NodePath("Life&Shield")
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("9_xx8vb")
+
+[node name="ForwardSpeed" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SpeedBar" type="ProgressBar" parent="CanvasLayer/ForwardSpeed"]
+layout_mode = 2
+offset_left = 33.0
+offset_top = 9.0
+offset_right = 258.0
+offset_bottom = 36.0
+
+[node name="Label" type="Label" parent="CanvasLayer/ForwardSpeed/SpeedBar"]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 37.0
+offset_right = 133.0
+offset_bottom = 60.0
+text = "Speed"
+
+[node name="DesiredSpeedBar" type="ProgressBar" parent="CanvasLayer/ForwardSpeed"]
+layout_mode = 2
+offset_left = 35.0
+offset_top = 88.0
+offset_right = 260.0
+offset_bottom = 115.0
+
+[node name="Label" type="Label" parent="CanvasLayer/ForwardSpeed/DesiredSpeedBar"]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 42.0
+offset_right = 133.0
+offset_bottom = 65.0
+text = "Speed"
+
+[node name="Life&Shield" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar3D" parent="CanvasLayer/Life&Shield" instance=ExtResource("10_g5cj4")]
+layout_mode = 1
+offset_left = 259.0
+offset_top = 28.0
+offset_right = 607.0
+offset_bottom = 55.0
+
+[node name="ShieldBar3D" parent="CanvasLayer/Life&Shield" instance=ExtResource("11_hgws4")]
+layout_mode = 1
+offset_left = 258.0
+offset_top = -9.0
+offset_right = 606.0
+offset_bottom = 18.0
+
+[connection signal="update_health_shield" from="." to="CanvasLayer" method="on_update_health"]
+[connection signal="analog_input" from="CanvasLayer/Control" to="." method="_on_mouse_analog_input_analog_input"]
