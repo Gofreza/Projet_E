@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=3 uid="uid://ou42qodyw7yo"]
 
 [ext_resource type="PackedScene" uid="uid://e7q3fp1olqh" path="res://Scenes/Player/Space/Player.tscn" id="1_7tx7e"]
-[ext_resource type="PackedScene" uid="uid://dxa72bp1lru6r" path="res://Scenes/Player/Space/Ship/Pancake.tscn" id="2_6vf46"]
 [ext_resource type="PackedScene" uid="uid://dmu0dodiskbpt" path="res://Scenes/Characters/BobBlue.tscn" id="2_b1vk7"]
+[ext_resource type="PackedScene" uid="uid://ckep2jcjc5p1e" path="res://Scenes/Player/Space/Ship/Striker.tscn" id="2_hbdne"]
 [ext_resource type="Texture2D" uid="uid://b8ma48w6tdw0m" path="res://Assets/Textures/8k_stars_milky_way.jpg" id="2_qilr3"]
 [ext_resource type="Texture2D" uid="uid://bu6wvctjqu752" path="res://Assets/Textures/8k_sun.jpg" id="4_fd6pw"]
 
@@ -39,7 +39,7 @@ transform = Transform3D(0.886995, -0.0812187, -0.454581, 0.46178, 0.156006, 0.87
 visible = false
 
 [node name="Player" parent="." instance=ExtResource("1_7tx7e")]
-ship = ExtResource("2_6vf46")
+ship = ExtResource("2_hbdne")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_qjajf")
@@ -56,18 +56,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 32.482, 2.08165e-12)
 width = 50
 height = 50
 
-[node name="Projectiles" type="Node3D" parent="."]
+[node name="Projectiles" type="Node" parent="."]
 
 [node name="Terrain" type="Node3D" parent="."]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Terrain"]
 transform = Transform3D(5.00651, 0, 0, 0, 5.00651, 0, 0, 0, 17.1733, 19.9177, -4.55468, 0)
-visible = false
 size = Vector3(8.34741, 1, 7.3833)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Terrain"]
 transform = Transform3D(-2.23341, 0, 0, 0, -26.1852, 0, 0, 0, -114.887, 19.2283, 10.7878, 0.188259)
-visible = false
 
 [node name="Sun" type="StaticBody3D" parent="."]
 

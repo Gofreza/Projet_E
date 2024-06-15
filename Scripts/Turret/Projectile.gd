@@ -57,6 +57,7 @@ extends RigidBody3D
 @export var speed: float = 100.0
 @export var damage: float
 @export var turret_range: float
+var projectile_origin: Vector3
 var direction: Vector3
 
 func _ready():
@@ -64,17 +65,17 @@ func _ready():
 	# Calculate the initial direction based on the cannon's orientation
 	var cannon_direction = direction.normalized()
 	linear_velocity = cannon_direction * speed  # Set initial velocity
-
+	
 func _integrate_forces(state):
 	var delta = state.get_step()
-	#global_transform.origin += linear_velocity * delta  # Move the bullet in its current direction
 	
 	var collision = move_and_collide(linear_velocity * delta)
 	if collision:
 		_on_collision(collision.get_collider())
 		
 	# Check if the bullet has reached its range
-	if global_transform.origin.distance_to(Vector3.ZERO) > turret_range:
+	if global_transform.origin.distance_to(projectile_origin) > turret_range:
+		#print(global_transform.origin-projectile_origin)
 		queue_free()  # Free the bullet if it exceeds the range
 
 func _on_collision(body):

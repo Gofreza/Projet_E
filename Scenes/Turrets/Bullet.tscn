@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bdwlhv46su6r8"]
 
-[ext_resource type="Script" path="res://Scripts/Turret/Laser.gd" id="1_dyh6k"]
+[ext_resource type="Script" path="res://Scripts/Turret/Projectile.gd" id="1_if4ym"]
 [ext_resource type="AudioStream" uid="uid://cq4eratofe3h2" path="res://Assets/Audio/laser-zap.mp3" id="2_femie"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_edmvo"]
@@ -21,7 +21,7 @@ points = PackedVector3Array(-0.0182264, -0.0978172, 0.0092536, 0.0184367, 0.0977
 
 [node name="RigidBody3D" type="RigidBody3D"]
 collision_layer = 4
-script = ExtResource("1_dyh6k")
+script = ExtResource("1_if4ym")
 damage = 100.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

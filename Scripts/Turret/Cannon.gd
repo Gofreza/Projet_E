@@ -48,6 +48,7 @@ func fire_laser():
 	if projectiles_node:
 		projectiles_node.add_child(laser)
 		laser.global_transform.origin = cannon.get_child(0).global_transform.origin
+		laser.projectile_origin = laser.global_transform.origin
 
 func _on_Timer_timeout():
 	can_fire = true

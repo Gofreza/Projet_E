@@ -60,7 +60,7 @@ func _ready():
 func _physics_process(delta):
 	match state:
 		State.MOVING:
-			move_towards_target(delta)
+			#move_towards_target(delta)
 			pass
 		State.WAITING:
 			pass  # Do nothing

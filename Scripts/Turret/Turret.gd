@@ -147,6 +147,7 @@ func fire_laser():
 	if projectiles_node:
 		projectiles_node.add_child(laser)
 		laser.global_transform.origin = cannon.get_child(0).global_transform.origin
+		laser.projectile_origin = laser.global_transform.origin
 
 func reset_rotation(delta):
 	if target_enemy == null and !fixed and turret.rotation != initial_rotation or target_enemy != null and !is_enemy_visible:
