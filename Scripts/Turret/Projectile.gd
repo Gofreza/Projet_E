@@ -57,6 +57,7 @@ extends RigidBody3D
 @export var speed: float = 100.0
 @export var damage: float
 @export var turret_range: float
+var projectile_parent
 var projectile_origin: Vector3
 var direction: Vector3
 
@@ -81,5 +82,5 @@ func _integrate_forces(state):
 func _on_collision(body):
 	if body.is_in_group("enemies"):
 		if body.has_method("get_damage"):
-			body.call("get_damage", damage)  # Apply damage to the enemy
+			body.call("get_damage", damage, projectile_parent)  # Apply damage to the enemy
 		queue_free()  # Destroy the bullet after hitting an enemy

@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://cbiuthwensg3y"]
 
 [ext_resource type="Texture2D" uid="uid://mdigcoqnw7mg" path="res://Assets/Models/OBJ/Imperial/Imperial_Red.png" id="1_4vknc"]
-[ext_resource type="Script" path="res://Scenes/Player/Space/Script/CapitalShipController.gd" id="1_u0dim"]
+[ext_resource type="Script" path="res://Scenes/Player/Space/Script/Player/CapitalShipController.gd" id="1_u0dim"]
 [ext_resource type="ArrayMesh" uid="uid://ddpljq5mjpein" path="res://Assets/Models/OBJ/Imperial/Imperial.obj" id="2_biiql"]
 [ext_resource type="Script" path="res://Scripts/Turret/TurretManager.gd" id="3_3dsjj"]
 [ext_resource type="PackedScene" uid="uid://3jms4qr7flea" path="res://Scenes/Turrets/CapitalTurret.tscn" id="5_0hi4t"]

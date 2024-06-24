@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://e7q3fp1olqh" path="res://Scenes/Player/Space/Player.tscn" id="1_7tx7e"]
 [ext_resource type="PackedScene" uid="uid://dmu0dodiskbpt" path="res://Scenes/Characters/BobBlue.tscn" id="2_b1vk7"]
-[ext_resource type="PackedScene" uid="uid://ckep2jcjc5p1e" path="res://Scenes/Player/Space/Ship/Striker.tscn" id="2_hbdne"]
+[ext_resource type="PackedScene" uid="uid://cbiuthwensg3y" path="res://Scenes/Player/Space/Ship/ImperialRed.tscn" id="2_bcwtb"]
 [ext_resource type="Texture2D" uid="uid://b8ma48w6tdw0m" path="res://Assets/Textures/8k_stars_milky_way.jpg" id="2_qilr3"]
 [ext_resource type="Texture2D" uid="uid://bu6wvctjqu752" path="res://Assets/Textures/8k_sun.jpg" id="4_fd6pw"]
 
@@ -39,7 +39,7 @@ transform = Transform3D(0.886995, -0.0812187, -0.454581, 0.46178, 0.156006, 0.87
 visible = false
 
 [node name="Player" parent="." instance=ExtResource("1_7tx7e")]
-ship = ExtResource("2_hbdne")
+ship = ExtResource("2_bcwtb")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_qjajf")
@@ -48,13 +48,9 @@ environment = SubResource("Environment_qjajf")
 
 [node name="BobBlue" parent="EnemiesManager" groups=["enemies"] instance=ExtResource("2_b1vk7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 35.606, -40.538)
-width = 50
-height = 50
 
 [node name="BobBlue2" parent="EnemiesManager" groups=["enemies"] instance=ExtResource("2_b1vk7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 32.482, 2.08165e-12)
-width = 50
-height = 50
 
 [node name="Projectiles" type="Node" parent="."]
 

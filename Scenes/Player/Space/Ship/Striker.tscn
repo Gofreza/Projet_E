@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://ckep2jcjc5p1e"]
 
-[ext_resource type="Script" path="res://Scenes/Player/Space/Script/ShipController.gd" id="1_17jkw"]
+[ext_resource type="Script" path="res://Scenes/Player/Space/Script/Player/PlayerShipController.gd" id="1_tki5j"]
 [ext_resource type="Texture2D" uid="uid://bo6xgm8ydyfgd" path="res://Assets/Models/OBJ/Striker/Striker_Purple.png" id="2_kbmhf"]
 [ext_resource type="ArrayMesh" uid="uid://cgtqof5m6msyr" path="res://Assets/Models/OBJ/Striker/Striker.obj" id="3_2f32q"]
 [ext_resource type="Script" path="res://Scripts/Turret/TurretManager.gd" id="4_ygpvd"]
@@ -22,7 +22,7 @@ points = PackedVector3Array(-2.58367, -1.36578, -1.18786, 2.63254, -1.23189, -1.
 points = PackedVector3Array(0, 0, 0, 77, -42, -100, 77, 45, -100, -77, 45, -100, -77, -42, -100)
 
 [node name="Striker" type="CharacterBody3D"]
-script = ExtResource("1_17jkw")
+script = ExtResource("1_tki5j")
 
 [node name="Striker" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 3.48787e-16, 8.74228e-08, 3.48787e-16, 1, -3.48787e-16, -8.74228e-08, -3.48787e-16, -1, 0, 0, 0)

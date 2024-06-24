@@ -43,6 +43,7 @@ func fire_laser():
 	laser.turret_range = turret_range
 	laser.damage = damage
 	laser.direction = cannon.global_transform.basis.z
+	laser.projectile_parent = get_parent_node_3d().get_parent()
 	#laser.target_enemy = enemy
 	
 	if projectiles_node:
